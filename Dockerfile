@@ -1,4 +1,4 @@
-FROM php:7.4.3-fpm-alpine
+FROM php:7-fpm-alpine
 
 CMD ["/bin/sh"]
 
