@@ -12,15 +12,7 @@ ENV TNS_ADMIN /usr/local/instantclient/
 COPY  instantclient-basic-linux.x64-19.5.0.0.0dbru.zip /tmp
 COPY  instantclient-sdk-linux.x64-19.5.0.0.0dbru.zip /tmp
 
-RUN apt-get update 
-
-RUN apt-get install -y zip unzip git libpq-dev libaio-dev  ${PHPIZE_DEPS} 
-
-RUN unzip /tmp/instantclient-basic-linux.x64-19.5.0.0.0dbru.zip -d /usr/local/ && unzip /tmp/instantclient-sdk-linux.x64-19.5.0.0.0dbru.zip -d /usr/local/ && ln -s /usr/local/instantclient_19_5 /usr/local/instantclient && pecl install -o -f redis && rm -rf /tmp/pear && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
-
-RUN docker-php-ext-configure oci8 --with-oci8=instantclient,/usr/local/instantclient/
-RUN ln -s /usr/lib/libnsl.so.2.0.0  /usr/lib/libnsl.so.1
-RUN docker-php-ext-install pdo pdo_pgsql pgsql oci8 && docker-php-ext-enable redis && rm -rf /usr/local/*.zip /tmp/*.zip /var/lib/apt/lists/* && apt-get remove -y ${PHPIZE_DEPS}
+RUN apt-get update && apt-get install -y zip unzip git libpq-dev libaio-dev  ${PHPIZE_DEPS} &&  unzip /tmp/instantclient-basic-linux.x64-19.5.0.0.0dbru.zip -d /usr/local/ && unzip /tmp/instantclient-sdk-linux.x64-19.5.0.0.0dbru.zip -d /usr/local/ && ln -s /usr/local/instantclient_19_5 /usr/local/instantclient && pecl install -o -f redis && rm -rf /tmp/pear && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && docker-php-ext-configure oci8 --with-oci8=instantclient,/usr/local/instantclient/ && ln -s /usr/lib/libnsl.so.2.0.0  /usr/lib/libnsl.so.1 && docker-php-ext-install pdo pdo_pgsql pgsql oci8 && docker-php-ext-enable redis && rm -rf /tmp/* /var/lib/apt/lists/* && apt-get remove -y zip unzip git ${PHPIZE_DEPS}
 
 WORKDIR /code
 EXPOSE 9000
