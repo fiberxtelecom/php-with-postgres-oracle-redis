@@ -1,4 +1,4 @@
-FROM php:7-fpm
+FROM php:fpm
 
 # Downloaded from Oracle: https://www.oracle.com/br/database/technologies/instant-client/linux-x86-64-downloads.html
 # instantclient-basiclite-linux.x64-19.5.0.0.0dbru.zip
@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y zip unzip git libpq-dev libaio-dev libc
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
 RUN sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 500M/g' "$PHP_INI_DIR/php.ini"
-RUN sed -i 's/post_max_size = 2M/post_max_size = 500M/g' "$PHP_INI_DIR/php.ini"
+RUN sed -i 's/post_max_size = 8M/post_max_size = 500M/g' "$PHP_INI_DIR/php.ini"
 
 WORKDIR /code
 EXPOSE 9000
