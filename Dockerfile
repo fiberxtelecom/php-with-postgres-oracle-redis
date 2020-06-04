@@ -17,8 +17,8 @@ RUN apt-get update && apt-get install -y zip unzip git libpq-dev libaio-dev libc
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
-RUN sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 500M/g' "$PHP_INI_DIR/php.ini"
-RUN sed -i 's/post_max_size = 8M/post_max_size = 500M/g' "$PHP_INI_DIR/php.ini"
+RUN sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 800M/g' "$PHP_INI_DIR/php.ini"
+RUN sed -i 's/post_max_size = 8M/post_max_size = 800M/g' "$PHP_INI_DIR/php.ini"
 
 WORKDIR /code
 EXPOSE 9000
