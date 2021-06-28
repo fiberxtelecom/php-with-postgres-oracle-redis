@@ -1,4 +1,4 @@
-FROM php:fpm
+FROM php:7.4.20-fpm
 
 # Downloaded from Oracle: https://www.oracle.com/br/database/technologies/instant-client/linux-x86-64-downloads.html
 # instantclient-basiclite-linux.x64-19.5.0.0.0dbru.zip
