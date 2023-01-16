@@ -1,4 +1,4 @@
-FROM php:8.1-fpm
+FROM php:8.2-fpm
 
 # Downloaded from Oracle: https://www.oracle.com/br/database/technologies/instant-client/linux-x86-64-downloads.html
 # instantclient-basiclite-linux.x64-19.5.0.0.0dbru.zip
@@ -10,16 +10,16 @@ ENV ORACLE_BASE /usr/local/instantclient/
 ENV TNS_ADMIN /usr/local/instantclient/
 ENV PHP_INI_DIR=/usr/local/etc/php
 
-COPY  instantclient-basic-linux.x64-19.5.0.0.0dbru.zip /tmp
-COPY  instantclient-sdk-linux.x64-19.5.0.0.0dbru.zip /tmp
+COPY  instantclient-basic-linux.x64-19.17.0.0.0dbru.zip /tmp
+COPY  instantclient-sdk-linux.x64-19.17.0.0.0dbru.zip /tmp
  
 RUN apt-get clean  && \ 
  apt-get update -y  && apt-get upgrade -y  && \ 
  apt-get install -y libxml2-dev zip unzip git libpng-dev libpq-dev libzip-dev libaio-dev libc-client-dev libkrb5-dev zlib1g-dev libmemcached-dev ${PHPIZE_DEPS}  && \ 
  rm -r /var/lib/apt/lists/*  && \ 
- unzip /tmp/instantclient-basic-linux.x64-19.5.0.0.0dbru.zip -d /usr/local/  && \ 
- unzip /tmp/instantclient-sdk-linux.x64-19.5.0.0.0dbru.zip -d /usr/local/  && \ 
- ln -s /usr/local/instantclient_19_5 /usr/local/instantclient  && \ 
+ unzip /tmp/instantclient-basic-linux.x64-19.17.0.0.0dbru.zip -d /usr/local/  && \ 
+ unzip /tmp/instantclient-sdk-linux.x64-19.17.0.0.0dbru.zip -d /usr/local/  && \ 
+ ln -s /usr/local/instantclient_19_17 /usr/local/instantclient  && \ 
  pecl install -o -f redis  && \ 
  pecl install -o -f memcached  && \ 
  rm -rf /tmp/pear  && \ 
@@ -37,7 +37,7 @@ RUN apt-get clean  && \
  mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"  && \ 
  sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 2G/g' "$PHP_INI_DIR/php.ini"  && \ 
  sed -i 's/post_max_size = 8M/post_max_size = 2G/g' "$PHP_INI_DIR/php.ini"  && \ 
- sed -i 's/memory_limit = 128M/memory_limit = 500M/g' "$PHP_INI_DIR/php.ini"
+ sed -i 's/memory_limit = 128M/memory_limit = 800M/g' "$PHP_INI_DIR/php.ini"
 
 WORKDIR /code
 EXPOSE 9000
